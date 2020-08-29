@@ -1,3 +1,4 @@
+require 'pry'
 # may not use #to_i or the Integer constructor
 # assumes all characters are valid
 DIGITS_MAP = {
@@ -7,10 +8,14 @@ DIGITS_MAP = {
 }
 
 def string_to_i(text, base=10)
+  first_char = text.chr
+  if %w[+ -].include?(first_char)
+    text.slice!(0)
+  end
   result = 0
   digits = text.split('').map { |c| DIGITS_MAP[c.downcase] }
   digits.each { |d| result = (result * base) + d }
-  result
+  first_char == '-' ? -result : result
 end
 
 # base 10
@@ -32,3 +37,5 @@ puts s_to_i('4321') == 4321
 puts s_to_i('570') == 570
 puts h_to_i('4D9f') == 19871
 puts o_to_i('427630') == 143256
+puts s_to_i('-570') == -570
+puts s_to_i('+100') == 100
