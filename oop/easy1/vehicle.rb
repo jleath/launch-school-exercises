@@ -1,9 +1,11 @@
 class Vehicle
-  attr_reader :make, :model
+  DEFAULT_WHEELS = 4
+  attr_reader :make, :model, :wheels
 
   def initialize(make, model)
     @make = make
     @model = model
+    @wheels = self.class::DEFAULT_WHEELS
   end
 
   def to_s
@@ -12,26 +14,21 @@ class Vehicle
 end
 
 class Car < Vehicle
-  def wheels
-    4
-  end
 end
 
 class Motorcycle < Vehicle
-  def wheels
-    2
-  end
+  DEFAULT_WHEELS = 2
 end
 
 class Truck < Vehicle
+  DEFAULT_WHEELS = 6
   attr_reader :payload
 
   def initialize(make, model, payload)
     super(make, model)
     @payload = payload
   end
-
-  def wheels
-    6
-  end
 end
+
+truck = Truck.new("whatever", "whatever", "who_cares")
+puts truck.wheels

@@ -6,7 +6,8 @@ class Pet
   end
 
   def to_s
-    "My name is #{@name.upcase}."
+    @name.upcase!
+    "My name is #{@name}."
   end
 end
 
@@ -17,10 +18,7 @@ puts fluffy
 puts fluffy.name
 puts name
 
-name = 42
-fluffy = Pet.new(name)
-name += 1
-puts fluffy.name
-puts fluffy
-puts fluffy.name
-puts name
+# line 16 will print 'Fluffy'
+# line 17 will print 'My name is FLUFFY.
+# line 18 will print 'FLUFFY'
+# line 19 will print 'FLUFFY'

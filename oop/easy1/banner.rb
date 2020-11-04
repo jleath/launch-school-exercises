@@ -1,7 +1,13 @@
 class Banner
-  def initialize(message, padding=1)
+  PADDING = 1
+
+  def initialize(message, width = nil)
+    if width.nil? || width < message.size
+      @width = message.size
+    else
+      @width = width
+    end
     @message = message
-    @padding = padding
   end
 
   def to_s
@@ -10,29 +16,31 @@ class Banner
 
   private
 
+  def inner_width
+    @width + (PADDING * 2)
+  end
+
   def horizontal_rule
-    '+' + ('-' * inner_length) + '+'
+    "+" + ("-" * inner_width) + "+"
   end
 
   def empty_line
-    '|' + (' ' * inner_length) + '|'
+    "|" + (" " * inner_width) + "|"
   end
 
   def message_line
-    '|' + (' ' * @padding) + @message + (' ' * @padding) + '|'
-  end
-
-  def inner_length
-    @message.length + (@padding * 2)
+    "| #{@message.center(@width)} |"
   end
 end
 
-banner = Banner.new('To boldly go where no one has gone before.')
+banner = Banner.new("To boldly go where no one has gone before.")
 puts banner
-# +--------------------------------------------+
-# |                                            |
-# | To boldly go where no one has gone before. |
-# |                                            |
-# +--------------------------------------------+
-puts Banner.new('')
-puts Banner.new('This is a banner', 3)
+
+banner = Banner.new('', 5)
+puts banner
+
+banner = Banner.new('Hello!', 3)
+puts banner
+
+banner = Banner.new('Hello!', 20)
+puts banner
