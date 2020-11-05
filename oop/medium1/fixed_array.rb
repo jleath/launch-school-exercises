@@ -1,47 +1,43 @@
 class FixedArray
-  def initialize(size)
-    @capacity = size
-    @buffer = [nil] * size
-  end
-
-  def [](index)
-    index = adjust_index(index)
-    unless valid_index(index)
-      raise IndexError, "Index out of bounds"
-    end
-    @buffer[index]
-  end
-
-  def []=(index, value)
-    index = adjust_index(index)
-    unless valid_index(index)
-      raise IndexError, "Index out of bounds"
-    end
-    @buffer[index] = value
+  def initialize(capacity)
+    @buffer = [nil] * capacity
   end
 
   def to_a
-    @buffer
+    @buffer.clone
   end
 
   def to_s
     @buffer.to_s
   end
 
-  private 
-
-  def valid_index(index)
-    index >= 0 && index < @capacity
+  def [](index)
+    index = adjust_index(index)
+    raise IndexError unless valid_index?(index)
+    @buffer[index] 
   end
+
+  def []=(index, value)
+    index = adjust_index(index)
+    raise IndexError unless valid_index?(index)
+    @buffer[index] = value
+  end
+
+  private
 
   def adjust_index(index)
-    if index < 0
-      @capacity + index
-    else
-      index
-    end
+    index >= 0 ? index : @buffer.size + index
+  end
+
+  def valid_index?(index)
+    index >= 0 && index < @buffer.size
   end
 end
+
+# accessing an index < capacity but > size returns nil
+# need to be able to set indices with []
+# negative indices should work just like regular arrays
+# attempted accesses outside of capacity should raise IndexError
 
 fixed_array = FixedArray.new(5)
 puts fixed_array[3] == nil

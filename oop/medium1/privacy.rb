@@ -1,19 +1,17 @@
 class Machine
   def start
-    self.flip_switch(:on)
+    flip_switch(:on)
   end
 
   def stop
-    self.flip_switch(:off)
+    flip_switch(:off)
   end
 
-  # to_s method added for testing/experimentation
-  def to_s
-    switch.to_s
+  def status
+    switch
   end
 
   private
-
   attr_accessor :switch
 
   def flip_switch(desired_state)
@@ -22,10 +20,7 @@ class Machine
 end
 
 machine = Machine.new
-puts machine
 machine.start
-puts machine
+p machine.status
 machine.stop
-puts machine
-machine.flip_switch('error')
-puts machine
+p machine.status
