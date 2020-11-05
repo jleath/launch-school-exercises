@@ -13,5 +13,5 @@ class Transform
 end
 
 my_data = Transform.new('abc')
-puts my_data.uppercase == 'ABC'
-puts Transform.lowercase('XYZ') == 'xyz'
+puts my_data.uppercase
+puts Transform.lowercase('XYZ')

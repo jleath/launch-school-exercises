@@ -20,6 +20,27 @@ class Person
   end
 end
 
+class Noble < Person
+  include Walkable
+
+  attr_reader :name, :title
+
+  def initialize(name, title)
+    @name = name
+    @title = title
+  end
+
+  def walk
+    "#{title} #{super}" 
+  end
+
+  private
+
+  def gait
+    "struts"
+  end
+end
+
 class Cat
   include Walkable
 
@@ -53,13 +74,22 @@ class Cheetah
 end
 
 mike = Person.new("Mike")
-mike.walk
+p mike.walk
 # => "Mike strolls forward"
 
 kitty = Cat.new("Kitty")
-kitty.walk
+p kitty.walk
 # => "Kitty saunters forward"
 
 flash = Cheetah.new("Flash")
-flash.walk
+p flash.walk
 # => "Flash runs forward"
+
+byron = Noble.new("Byron", "Lord")
+p byron.walk
+# => "Lord Byron struts forward"
+
+byron.name
+# => "Byron"
+byron.title
+# => "Lord"

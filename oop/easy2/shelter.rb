@@ -1,54 +1,61 @@
 class Pet
-  attr_reader :type, :name
-
-  def initialize(type, name)
-    @type = type
+  def initialize(pet_type, name)
+    @pet_type = pet_type
     @name = name
   end
 
   def to_s
-    "a #{type} named #{name}"
+    "a #{@pet_type} named #{@name}"
   end
 end
 
 class Owner
-  attr_reader :name, :pets
+  attr_reader :name
 
   def initialize(name)
     @name = name
     @pets = []
   end
 
-  def adopt_pet(pet)
+  def add_pet(pet)
     @pets << pet
+  end
+  
+  def print_pets
+    @pets.each { |pet| puts pet }
   end
 
   def number_of_pets
     @pets.size
   end
-
-  def print_pets
-    puts pets
-  end
 end
 
 class Shelter
   def initialize
-    @owners = []    
+    @owners = []
+    @unadopted = []
   end
 
   def adopt(owner, pet)
-    unless @owners.include?(owner)
-      @owners << owner
-    end
-    owner.adopt_pet(pet)
+    owner.add_pet(pet)
+    @owners << owner unless @owners.include?(owner)
   end
 
   def print_adoptions
     @owners.each do |owner|
       puts "#{owner.name} has adopted the following pets:"
       owner.print_pets
-    end 
+      puts ''
+    end
+  end
+
+  def add_unadopted_pet(pet)
+    @unadopted << pet
+  end
+
+  def print_unadopted
+    puts "The animal shelter has the following unadopted pets:"
+    puts @unadopted
   end
 end
 
@@ -75,21 +82,16 @@ shelter.print_adoptions
 puts "#{phanson.name} has #{phanson.number_of_pets} adopted pets."
 puts "#{bholmes.name} has #{bholmes.number_of_pets} adopted pets."
 
-=begin
-  
-P Hanson has adopted the following pets:
-a cat named Butterscotch
-a cat named Pudding
-a bearded dragon named Darwin
+# P Hanson has adopted the following pets:
+# a cat named Butterscotch
+# a cat named Pudding
+# a bearded dragon named Darwin
 
-B Holmes has adopted the following pets:
-a dog named Molly
-a parakeet named Sweetie Pie
-a dog named Kennedy
-a fish named Chester
+# B Holmes has adopted the following pets:
+# a dog named Molly
+# a parakeet named Sweetie Pie
+# a dog named Kennedy
+# a fish named Chester
 
-P Hanson has 3 adopted pets.
-B Holmes has 4 adopted pets.
-
-=end
-  
+# P Hanson has 3 adopted pets.
+# B Holmes has 4 adopted pets.
