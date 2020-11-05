@@ -65,8 +65,6 @@ class Employee
 
   attr_reader :serial_number
 
-  private
-
   def abbreviated_serial_number
     serial_number[-4..-1]
   end
@@ -88,3 +86,13 @@ miller_contracting.remove(raul) # => Employee deleted.
 miller_contracting.add(natasha) # => Employee added.
 
 miller_contracting.display_all_employees
+
+# Our problem starts when we attempt to add an employee to the employer using the
+# `<<` method. We have aliased this method to refer to the `add` method. The
+# EmployeeManagementSystem#add method then calls the `exists?` method, which attempts
+# to compare two Employee objects using the `==` method.
+
+# Within the Employee#== method, we attempt to access the private instance variable
+# `serial_number` of the Employee object named `other`. Because this variable is
+# private, we can't access it. We need to change the access of this variable
+# to protected.

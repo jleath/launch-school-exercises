@@ -43,3 +43,18 @@ puts copy_of_blog_post.is_a? MarkdownFile     # true
 puts copy_of_blog_post.read == blog_post.read # true
 
 puts blog_post
+
+# On line 19, within the `File` class definition, we attempt to access a constant
+# named `FORMAT`. Class constants have lexical scope, so Ruby starts looking for this
+# constant in the `File` class, because that is where we used it. It will then check
+# all enclosing scopes (in this case there are none), and then it will follow the
+# method lookup path to find it.
+
+# In this case, Ruby will not be able to find the FORMAT constant. We've defined it in
+# all the subclasses of `File` so we presumably wanted each subclass of File to be able
+# to access its own `FORMAT` constant from the `to_s` method it inherited from File.
+
+# We can get this functionality by using `self.class::FORMAT` instead of just `FORMAT`
+# This way when the `to_s` method is called on a object with a type that inherits from
+# File, we can still use the method inherited from File and Ruby will know explicitly
+# where to look to find the right constant.

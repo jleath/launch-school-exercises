@@ -42,3 +42,12 @@ puts ada.location                   # (-33.89, 151.277)
 puts grace.location                 # (-33.89, 151.277)
 puts ada.location == grace.location # expected: true
                                     # actual: false
+
+# On line 39, we are calling the `==` method on a GeoLocation object.
+# We have not defined this method for that class so by default it will
+# use the `==` method defined in `BasicObject`. This method compares object ids
+# and will only return true if the caller and the argument are the same object.
+
+# We can override the `==` method in the `GeoLocation` class. Within this method
+# we will use the `Float#==` method to do the comparison for us. We need to call this
+# method on both the `latitude` and `longitude` instance variables.
