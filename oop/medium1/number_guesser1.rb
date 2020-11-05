@@ -16,6 +16,7 @@ class GuessingGame
     loop do
       if out_of_guesses?
         puts "You have no more guesses. You lost!"
+        break
       elsif correct_guess?(guess)
         puts "You won!"
         break
