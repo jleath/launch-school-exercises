@@ -1,4 +1,6 @@
 class Length
+  include Comparable
+
   attr_reader :value, :unit
 
   def initialize(value, unit)
@@ -18,38 +20,14 @@ class Length
     convert_to(:nmi, { km: 1.8519993, mi: 1.15078, nmi: 1 })
   end
 
-  def ==(other)
-    case unit
-    when :km  then value == other.as_kilometers.value
-    when :mi  then value == other.as_miles.value
-    when :nmi then value == other.as_nautical_miles.value
-    end
-  end
-
-  def <(other)
-    case unit
-    when :km  then value < other.as_kilometers.value
-    when :mi  then value < other.as_miles.value
-    when :nmi then value < other.as_nautical_miles.value
-    end
-  end
-
-  def <=(other)
-    self < other || self == other
-  end
-
-  def >(other)
-    !(self <= other)
-  end
-
-  def >=(other)
-    self > other || self == other
-  end
-
   def <=>(other)
-    return -1 if self < other
-    return 0 if self == other
-    1
+    other_value = case unit
+    when :km then other.as_kilometers.value
+    when :mi then other.as_miles.value
+    when :nmi then other.as_nautical_miles.value
+    end
+
+    value <=> other_value
   end
 
   def to_s
@@ -71,3 +49,10 @@ puts [Length.new(1, :mi), Length.new(1, :nmi), Length.new(1, :km)].sort
 # 1 km
 # 1 mi
 # 1 nmi
+
+# The `sort` method, when called on an array, uses the `<=>` method to compare
+# objects for sorting. The Length class has all the other comparison operators defined,
+# but not `<=>`. We can remedy this by mixing the `Comparable` module into `Length` and
+# defining the `<=>` method. We don't need to implement the other comparison methods
+# because the inclusion of the `Comparison` module means we will get those for free
+# when we define `<=>`

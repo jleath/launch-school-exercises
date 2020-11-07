@@ -17,7 +17,7 @@ class BankAccount
   end
 
   def withdraw(amount)
-    if amount > 0 && valid_transaction?(balance - amount)
+    if amount > 0 && amount <= @balance
       self.balance -= amount
       "$#{amount} withdrawn. Total balance is $#{balance}."
     else
@@ -26,16 +26,7 @@ class BankAccount
   end
 
   def balance=(new_balance)
-    if valid_transaction?(new_balance)
       @balance = new_balance
-      true
-    else
-      false
-    end
-  end
-
-  def valid_transaction?(new_balance)
-    new_balance >= 0
   end
 end
 
