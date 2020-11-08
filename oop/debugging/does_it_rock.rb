@@ -19,9 +19,9 @@ class SearchEngine
 end
 
 module DoesItRock
-  API_KEY = 'L1sA'
+  API_KEY = 'LS1A'
 
-  class NoScore < StandardError; end
+  class NoScore; end
 
   class Score
     def self.for_term(term)
@@ -29,8 +29,8 @@ module DoesItRock
       negative = SearchEngine.count(%{"#{term} is not fun"}, API_KEY).to_f
 
       positive / (positive + negative)
-    rescue AuthenticationError
-      raise NoScore
+    rescue ZeroDivisionError
+      NoScore.new
     end
   end
 
@@ -39,7 +39,7 @@ module DoesItRock
 
     case score
     when NoScore
-      "No idea about #{term}..."
+      "No idea about #{term}"
     when 0...0.5
       "#{term} is not fun."
     when 0.5
@@ -47,7 +47,7 @@ module DoesItRock
     else
       "#{term} rocks!"
     end
-  rescue NoScore => e
+  rescue StandardError => e
     e.message
   end
 end

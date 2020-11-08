@@ -71,6 +71,7 @@ end
 
 class PostalService < CommunicationsProvider
   include Mailing
+
   attr_accessor :street_address, :mailbox
 
   def initialize(name, street_address)
