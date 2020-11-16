@@ -1,8 +1,6 @@
-require 'simplecov'
 require 'minitest/autorun'
 require 'minitest/reporters'
 
-SimpleCov.start
 MiniTest::Reporters.use!
 
 require_relative 'cash_register'
