@@ -5,8 +5,8 @@ class PalindromeProduct
     @factors = []
   end
 
-  def add_factor_pair(factor_pair)
-    @factors << factor_pair.sort
+  def add_factor_pair(factor1, factor2)
+    @factors << [factor1, factor2].sort
   end
 end
 
@@ -26,7 +26,7 @@ class Palindromes
         product = factor1 * factor2
         if palindromic?(product)
           add_product(product) unless @products.key?(product)
-          @products[product].add_factor_pair([factor1, factor2])
+          @products[product].add_factor_pair(factor1, factor2)
         end
       end
     end
